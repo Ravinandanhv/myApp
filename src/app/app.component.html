@@ -1,0 +1,107 @@
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="createUser()">
+    <div class="form-group" >
+      <label for="Email">Email address</label>
+      <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
+      [ngClass]="{
+        'is-invalid': !form.controls['email'].valid && form.controls['email'].touched
+      }">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+     <div class="form-group">
+      <label for="Name">Name</label>
+      <input formControlName="name" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input formControlName="age" type="number" class="form-control">
+    </div>
+    <div>
+      <span *ngIf="form.value.age">{{form.value.age>18?(form.value?.age>60)?'Senior':'Major':'Minor'}}</span>
+    </div>
+    <div>
+      <input type="checkbox" value="1" (change)="gen($event)" id="Male"><label for="Male">Male</label>
+      <input type="checkbox" value="2" id="Female" (change)="gen($event)"><label for="Female">Female</label>
+    </div>
+    <button [disabled]="!form.valid" type="submit" class="btn btn-success">Submit</button>
+  </form>
+<div class="d-flex flex-column w-100  position-relative">
+  <div class="card-container">
+    <input type="checkbox" [(ngModel)]="inputValue" (change)="selectAll($event)">
+    <div class="list-group">
+      <div
+        class="list-group-item d-flex align-items-center justify-content-start header py-0 bg-light text-uppercase font-11 fw-500">
+        <!-- <div class="hover d-flex align-items-center item-name d-flex align-items-center">
+          <span class="mr-2">id</span>
+        </div> -->
+        <div class="d-flex align-items-center justify-content-center">
+          <div  class="hover d-flex align-items-center item-record-count">
+            <span class="mr-2">Name</span>
+          </div>
+          <div  class="hover d-flex align-items-center item-attribute-count">
+            <span class="mr-2">Age</span>
+          </div>
+          <div class="hover d-flex align-items-center item-hook-count">
+            <span class="mr-2">Email</span>
+          </div>
+          <div class="hover d-flex align-items-center item-reference-count">
+            <span class="mr-2">Gender</span>
+          </div>
+          <div class="ml-6">
+            <button class="btn btn-warning" type="button" (click)="deleteAll()">
+              DeleteAll
+            </button>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngFor="let po of post;let i=index">
+        <div class="list-group-item d-flex align-items-center justify-content-start">
+          <!-- <div class="item-name fw-500 d-flex align-items-center">
+            <span class="ml-2 pl-1 text-dark hover service-name" 
+              ></span>
+          </div> -->
+          <input type="checkbox" [checked]="po.checked" (change)="onChange($event,po)">
+          <div class="d-flex align-items-center justify-content-center">
+            <div class="item-attribute-count">{{po.name}}</div>
+            <div class="item-reference-count">{{po.age}}</div>
+            <div class="item-hook-count">{{po.email}}</div>
+            <div class="item-reference-count">{{po.gender}}</div>
+          </div> 
+          <div class="ml-6" type="text" (click)="edit()">Edit</div>
+          <div class="ml-6">
+            <button class="btn btn-warning" type="button" (click)="delete(po.name)">
+              Delete
+            </button>
+          </div>           
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div class="edit-window p-4 page-padding position-fixed bg-white d-flex flex-column" *ngIf="showEditPanel">
+    <div class="d-flex flex-column w-100" >
+      <label for="Email">Email address</label>
+      <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
+      [ngClass]="{
+        'is-invalid': !form.controls['email'].valid && form.controls['email'].touched
+      }">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+     <div class="form-group">
+      <label for="Name">Name</label>
+      <input formControlName="name" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input formControlName="age" type="number" class="form-control">
+    </div>
+    <div>
+      <span *ngIf="form.value.age">{{form.value.age>18?(form.value?.age>60)?'Senior':'Major':'Minor'}}</span>
+    </div>
+    <div>
+      <input type="checkbox" value="1" (change)="gen($event)" id="Male"><label for="Male">Male</label>
+      <input type="checkbox" value="2" id="Female" (change)="gen($event)"><label for="Female">Female</label>
+    </div>
+    <button [disabled]="!form.valid" type="submit" class="btn btn-success">Submit</button>
+</div>
+</div>
